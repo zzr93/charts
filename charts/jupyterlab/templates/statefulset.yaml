@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         rollme: {{ randAlphaNum 5 | quote }}
     spec:
-      containers:
+    - containers:
         image: "jupyter/datascience-notebook:python-3.9.6"
         imagePullPolicy: "IfNotPresent"
         name: {{ .Release.Name }}-jupyter
