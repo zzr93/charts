@@ -8,7 +8,7 @@ metadata:
     release: {{ .Release.Name }}
   name: "{{ .Release.Name }}-service"
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: 8888tcp
       port: 8888
