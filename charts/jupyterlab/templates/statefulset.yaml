@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: {{ .Release.Name }}-jupyter-{{ .Values.user }}
+    app: {{ .Release.Name }}-jupyter
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
@@ -10,7 +10,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   serviceName: "{{ .Release.Name }}"
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app: "{{ .Release.Name }}"
@@ -24,23 +24,21 @@ spec:
         rollme: {{ randAlphaNum 5 | quote }}
     spec:
       containers:
-        image: {{ .Values.image.repository }}
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
-        name: {{ .Release.Name }}-jupyter-{{ .Values.user }}
+        image: "jupyter/datascience-notebook:python-3.9.6"
+        imagePullPolicy: "IfNotPresent"
+        name: {{ .Release.Name }}-jupyter
         args:
         - /bin/bash
         - -c
         - 'cp -r /home/jovyan/work/.ssh /home/jovyan/ 2>/dev/null || : && jupyter lab --notebook-dir=/home/jovyan/work --ip 0.0.0.0 --no-browser --allow-root'
         ports:
-        - containerPort: {{ .Values.service.targetPort }}
-          name: {{ .Values.service.targetPort }}{{ .Values.service.protocol | lower }}
-          protocol: {{ .Values.service.protocol }}
+        - containerPort: 8888
+          name: 8888tcp
+          protocol: TCP
         resources:
           requests:
             cpu: "1"
             memory: 1000Mi
-        {{- if .Values.resources.enabled }}
           limits:
             cpu: "{{ .Values.resources.cpu }}"
             memory: {{ .Values.resources.memory }}
-        {{- end }}

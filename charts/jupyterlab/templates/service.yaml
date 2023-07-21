@@ -8,12 +8,12 @@ metadata:
     release: {{ .Release.Name }}
   name: "{{ .Release.Name }}-service"
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    - name: {{ .Values.service.targetPort }}{{ .Values.service.protocol | lower }}
-      port: {{ .Values.service.targetPort }}
-      protocol: {{ .Values.service.protocol }}
-      targetPort: {{ .Values.service.targetPort }}
+    - name: 8888tcp
+      port: 8888
+      protocol: TCP
+      targetPort: 8888
   selector:
     app: "{{ .Release.Name }}"
     release: {{ .Release.Name }}
