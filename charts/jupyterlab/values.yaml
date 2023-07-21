@@ -1,0 +1,42 @@
+# Replica count for script runner & website
+replicaCount: 1
+
+user: master
+root: false
+
+gpu:
+  enabled: false
+
+resources:
+  enabled: true
+  cpu: 20
+  memory: 25000Mi
+
+# Images
+image:
+  repository: jupyter/datascience-notebook:python-3.9.6
+  pullPolicy: IfNotPresent
+  deployRegistry: false
+  # imagePullSecrets:
+
+# Service discovery for Website
+service:
+  type: ClusterIP
+  targetPort: 8888
+  protocol: TCP
+
+# Load Balancer
+ingress:
+  enabled: true
+  url: jupyter-data.compagny.net
+  tls:
+  - hosts:
+    - jupyter-data.compagny.net
+    secretName: jupyter-data
+
+## Persist data to a persistent volume
+persistence:
+  enabled: true
+  size: 30Gi
+  accessMode: "ReadWriteOnce"
+  mountPath: /home/jovyan/work

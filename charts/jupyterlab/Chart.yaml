@@ -1,0 +1,21 @@
+annotations:
+  artifacthub.io/images: |
+    - name: jupyter
+      image: jupyter/datascience-notebook:python-3.9.6
+apiVersion: v2
+appVersion: jupyter/datascience-notebook:python-3.9.6
+description: jupyterlab data science notebook
+home: https://github.com/curie-data-factory/helm-charts/tree/master/charts/jupyterlab
+icon: https://jupyter.org/assets/homepage/main-logo.svg
+keywords:
+- jupyter
+- lab
+- datascience
+kubeVersion: '>= 1.14.0-0'
+maintainers:
+- email: armand.leopold@curie.fr
+  name: armandleopold
+name: jupyterlab
+sources:
+- https://jupyter.org/
+version: 0.1.5
