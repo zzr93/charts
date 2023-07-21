@@ -1,4 +1,4 @@
-
+# 所使用资源数目
 resources:
   cpu: 2
   memory: 2500Mi
